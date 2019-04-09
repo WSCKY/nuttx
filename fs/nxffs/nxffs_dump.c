@@ -75,9 +75,10 @@ struct nxffs_blkinfo_s
 /****************************************************************************
  * Private Data
  ****************************************************************************/
-
+#if defined(CONFIG_DEBUG_FEATURES) && defined(CONFIG_DEBUG_FS)
 static const char g_hdrformat[] = "  BLOCK:OFFS  TYPE  STATE   LENGTH\n";
 static const char g_format[]    = "  %5d:%-5d %s %s %5d\n";
+#endif
 
 /****************************************************************************
  * Private Functions
