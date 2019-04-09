@@ -137,7 +137,11 @@
 
 #ifndef CONFIG_AT24XX_MTD_BLOCKSIZE
 #  warning "Assuming MTD driver block size is the same as the FLASH page size"
+#if (AT24XX_PAGESIZE < 64)
+#  define CONFIG_AT24XX_MTD_BLOCKSIZE 64
+#else
 #  define CONFIG_AT24XX_MTD_BLOCKSIZE AT24XX_PAGESIZE
+#endif
 #endif
 
 #ifndef CONFIG_AT24XX_TIMEOUT_MS
