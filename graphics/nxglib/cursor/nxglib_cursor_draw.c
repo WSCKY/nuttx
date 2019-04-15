@@ -84,15 +84,12 @@ static NXGL_PIXEL_T nxbe_map_color(FAR struct nxbe_state_s *be, int plane,
 
       case 1:
         return be->cursor.color1[plane];
-        break;
 
       case 2:
         return be->cursor.color2[plane];
-        break;
 
       case 3:
         return be->cursor.color3[plane];
-        break;
     }
 }
 
@@ -129,6 +126,7 @@ void NXGL_FUNCNAME(nxglib_cursor_draw, NXGLIB_SUFFIX)
   FAR NXGL_PIXEL_T *dest;
   nxgl_coord_t width;
   nxgl_coord_t height;
+  nxgl_coord_t swidth;
   nxgl_coord_t sstride;
   nxgl_coord_t dstride;
   nxgl_coord_t sshift;
@@ -145,14 +143,15 @@ void NXGL_FUNCNAME(nxglib_cursor_draw, NXGLIB_SUFFIX)
   nxgl_rectintersect(&intersection, &intersection, bounds);
   if (!nxgl_nullrect(&intersection))
     {
-      /* Get the width and the height of the images in pixels/rows */
+      /* Get the width and the height of the images to copy in pixels/rows */
 
-      width   = be->cursor.bounds.pt2.x = be->cursor.bounds.pt1.x + 1;
-      height  = be->cursor.bounds.pt2.y = be->cursor.bounds.pt1.y + 1;
+      width   = intersection.pt2.x - intersection.pt1.x + 1;
+      height  = intersection.pt2.y - intersection.pt1.y + 1;
 
       /* Get the width of the images in bytes. */
 
-      sstride = (width + 3) >> 2;  /* 2 bits per pixel, 4 pixels per byte */
+      swidth  = be->cursor.bounds.pt2.x - be->cursor.bounds.pt1.x + 1;
+      sstride = (swidth + 3) >> 2;  /* 2 bits per pixel, 4 pixels per byte */
 
       plane   = &be->plane[planeno];
       dstride = plane->pinfo.stride;
@@ -169,9 +168,9 @@ void NXGL_FUNCNAME(nxglib_cursor_draw, NXGLIB_SUFFIX)
        */
 
       fbmem  = (FAR uint8_t *)plane->pinfo.fbmem;
-      sline  = be->cursor.image + sstride * origin.y + (origin.y >> 2);
-      dline  = (FAR uint8_t *)fbmem + dstride * be->cursor.bounds.pt1.y +
-                NXGL_SCALEX(be->cursor.bounds.pt1.x);
+      sline  = be->cursor.image + sstride * origin.y + (origin.x >> 2);
+      dline  = (FAR uint8_t *)fbmem + dstride * intersection.pt1.y +
+                NXGL_SCALEX(intersection.pt1.x);
 
       sshift = (3 - (origin.y & 3)) << 1;    /* MS first {0, 2, 4, 6} */
 
@@ -202,9 +201,6 @@ void NXGL_FUNCNAME(nxglib_cursor_draw, NXGLIB_SUFFIX)
                   *dest = nxbe_map_color(be, 0, pixel);
                 }
 
-              /* Update to the next column */
-
-              col++;
               dest++;
 
               /* Was that the last pixel in the byte? */

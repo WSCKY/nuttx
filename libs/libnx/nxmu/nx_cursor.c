@@ -97,8 +97,8 @@ int nxcursor_enable(NXHANDLE hnd, bool enable)
  * Description:
  *   Set the cursor image.
  *
- *   The image is provided a a 2-bits-per-pixel image.  The two bit incoding
- *   is as followings:
+ *   The image is provided a a 2-bits-per-pixel image.  The two bit encoding
+ *   is as follows:
  *
  *   00 - The transparent background
  *   01 - Color1:  The main color of the cursor
@@ -119,7 +119,7 @@ int nxcursor_enable(NXHANDLE hnd, bool enable)
  ****************************************************************************/
 
 #if defined(CONFIG_NX_HWCURSORIMAGE) || defined(CONFIG_NX_SWCURSOR)
-int nxcursor_setimage(NXHANDLE hnd, FAR struct nx_cursorimage_s *image)
+int nxcursor_setimage(NXHANDLE hnd, FAR const struct nx_cursorimage_s *image)
 {
   FAR struct nxmu_conn_s *conn = (FAR struct nxmu_conn_s *)hnd;
   struct nxsvrmsg_curimage_s outmsg;

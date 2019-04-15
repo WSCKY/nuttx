@@ -129,7 +129,7 @@ static inline void nxbe_fill_dev(FAR struct nxbe_window_s *wnd,
                    &info.cops, &wnd->be->plane[i]);
 
 #ifdef CONFIG_NX_SWCURSOR
-      /* Save the modified cursor background region.
+      /* Backup and redraw the cursor in the affected region.
        *
        * REVISIT:  This and the following logic belongs in the function
        * nxbe_clipfill().  It is here only because the struct nxbe_state_s
@@ -137,13 +137,7 @@ static inline void nxbe_fill_dev(FAR struct nxbe_window_s *wnd,
        * excessive number of cursor updates.
        */
 
-      wnd->be->plane[i].cursor.backup(wnd->be, rect, i);
-
-      /* Restore the software cursor if any part of the cursor was
-       * overwritten by the fill.
-      */
-
-      wnd->be->plane[i].cursor.draw(wnd->be, rect, i);
+      nxbe_cursor_backupdraw_dev(wnd->be, rect, i);
 #endif
     }
 }
