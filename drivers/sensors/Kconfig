@@ -230,6 +230,19 @@ config LSM9DS1_I2C_FREQUENCY
 	range 1 400000
 	depends on SN_LSM9DS1
 
+config SENSORS_LSM9DS1_SPI
+	bool "STMicro LSM9DS1 support via SPI"
+	default n
+	select SPI
+	---help---
+		Enable driver support for the STMicro LSM9DS1 via SPI.
+
+config LSM9DS1_SPI_FREQUENCY
+	int "LSM9DS1 SPI frequency"
+	default 10000000
+	range 1 10000000
+	depends on SENSORS_LSM9DS1_SPI
+
 config SENSORS_LPS25H
 	bool "STMicro LPS25H pressure sensor"
 	default n

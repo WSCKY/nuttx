@@ -227,6 +227,10 @@ ifeq ($(CONFIG_SENSORS_LSM330SPI),y)
   CSRCS += lsm330_spi.c
 endif
 
+ifeq ($(CONFIG_SENSORS_LSM9DS1_SPI),y)
+  CSRCS += lsm9ds1_spi.c
+endif
+
 ifeq ($(CONFIG_SENSORS_L3GD20),y)
   CSRCS += l3gd20.c
 endif
