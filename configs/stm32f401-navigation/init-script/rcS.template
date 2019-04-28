@@ -1,0 +1,11 @@
+echo "This is the Nuttx Init Script"
+echo "Final Countdown ..."
+sleep 1
+echo "3"
+sleep 1
+echo "2"
+sleep 1
+echo "1"
+sleep 1
+echo "Nuttx is going to take over the world!"
+

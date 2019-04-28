@@ -1302,6 +1302,15 @@ config ARCH_BOARD_STM32F103_MINIMUM
 	---help---
 		A configuration for the STM32F103 Minimum board.
 
+config ARCH_BOARD_STM32F407_MINIMUM
+	bool "STM32F407VGT6 Minimum ARM Development Board"
+	depends on ARCH_CHIP_STM32F407VG
+	select ARCH_HAVE_LEDS
+	select ARCH_HAVE_BUTTONS
+	select ARCH_HAVE_IRQBUTTONS
+	---help---
+		A configuration for the STM32F407 Minimum board.
+
 config ARCH_BOARD_STM3210E_EVAL
 	bool "STMicro STM3210E-EVAL development board"
 	depends on ARCH_CHIP_STM32F103ZE
@@ -1385,6 +1394,15 @@ config ARCH_BOARD_STM32F4_DISCOVERY
 	select ARCH_HAVE_IRQBUTTONS
 	---help---
 		STMicro STM32F4-Discovery board based on the STMicro STM32F407VGT6 MCU.
+
+config ARCH_BOARD_STM32F401_NAVIGATION
+	bool "Navigation board with IMU & GNSS"
+	depends on ARCH_CHIP_STM32F401CE
+	select ARCH_HAVE_LEDS
+	select ARCH_HAVE_BUTTONS
+	select ARCH_HAVE_IRQBUTTONS
+	---help---
+		This Navigation board based on the STMicro STM32F401CEU6 MCU.
 
 config ARCH_BOARD_STM32F411E_DISCO
 	bool "STMicro STM32F411E-Discovery board"
@@ -1928,12 +1946,14 @@ config ARCH_BOARD
 	default "stm32f051-discovery"      if ARCH_BOARD_STM32F051_DISCOVERY
 	default "stm32f072-discovery"      if ARCH_BOARD_STM32F072_DISCOVERY
 	default "stm32f103-minimum"        if ARCH_BOARD_STM32F103_MINIMUM
+	default "stm32f407-minimum"        if ARCH_BOARD_STM32F407_MINIMUM
 	default "stm3210e-eval"            if ARCH_BOARD_STM3210E_EVAL
 	default "stm3220g-eval"            if ARCH_BOARD_STM3220G_EVAL
 	default "stm3240g-eval"            if ARCH_BOARD_STM3240G_EVAL
 	default "stm32f3discovery"         if ARCH_BOARD_STM32F3_DISCOVERY
 	default "stm32f334-disco"          if ARCH_BOARD_STM32F334_DISCO
 	default "stm32f4discovery"         if ARCH_BOARD_STM32F4_DISCOVERY
+        default "stm32f401-navigation"     if ARCH_BOARD_STM32F401_NAVIGATION
 	default "stm32f411e-disco"         if ARCH_BOARD_STM32F411E_DISCO
 	default "stm32f429i-disco"         if ARCH_BOARD_STM32F429I_DISCO
 	default "stm32f746g-disco"         if ARCH_BOARD_STM32F746G_DISCO
@@ -2387,6 +2407,9 @@ endif
 if ARCH_BOARD_STM32F103_MINIMUM
 source "configs/stm32f103-minimum/Kconfig"
 endif
+if ARCH_BOARD_STM32F407_MINIMUM
+source "configs/stm32f407-minimum/Kconfig"
+endif
 if ARCH_BOARD_STM3210E_EVAL
 source "configs/stm3210e-eval/Kconfig"
 endif
@@ -2401,6 +2424,9 @@ source "configs/stm32f334-disco/Kconfig"
 endif
 if ARCH_BOARD_STM32F4_DISCOVERY
 source "configs/stm32f4discovery/Kconfig"
+endif
+if ARCH_BOARD_STM32F401_NAVIGATION
+source "configs/stm32f401-navigation/Kconfig"
 endif
 if ARCH_BOARD_STM32F411E_DISCO
 source "configs/stm32f411e-disco/Kconfig"
